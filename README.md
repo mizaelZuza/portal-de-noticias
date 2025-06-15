@@ -1,10 +1,10 @@
-# Projeto: Orquestração de aplicações com Kubernetes (Portal de Notícias)
+# Projeto: Orquestração de aplicações com Kubernetes - Portal de Notícias
 
 ---
 
 ## Visão geral do projeto
 
-Este projeto é uma demonstração prática do meu conhecimento em **DevOps** e na **orquestração de contêineres utilizando Kubernetes**. Utilizei **portal de notícias (Projeto disponibilizado pela Alura)** como aplicação de exemplo, mas o foco principal reside na infraestrutura subjacente, que ilustra como o Kubernetes pode ser empregado para **gerenciar, escalar e garantir a resiliência de aplicações em ambientes de produção**.
+Este projeto é uma demonstração prática do meu conhecimento em **DevOps** e na **orquestração de contêineres utilizando Kubernetes**. Utilizei o **portal de notícias (Projeto disponibilizado pela Alura)** como aplicação de exemplo, mas o foco principal reside na infraestrutura por trás, que ilustra como o Kubernetes pode ser empregado para **gerenciar, escalar e garantir a resiliência de aplicações em ambientes de produção**.
 
 Meu objetivo é apresentar a capacidade de construir e manter uma infraestrutura de aplicação robusta e escalável, utilizando as melhores práticas do Kubernetes.
 
@@ -16,7 +16,7 @@ Através deste projeto, demonstro compreenção dos seguintes aspectos do Kubern
 
 * **Criação e gerenciamento de clusters:** Habilidade em configurar e manter um ambiente de orquestração de contêineres.
 * **Escalabilidade de aplicações:** Implementação de estratégias para o escalonamento horizontal de recursos, garantindo que a aplicação possa lidar com diferentes demandas de tráfego.
-* **Gerenciamento de configurações e variáveis de ambiente:** Utilização de **ConfigMaps** para desacoplar configurações da aplicação do código, facilitando a gestão de variáveis de ambiente e a segurança de dados não sensíveis.
+* **Gerenciamento de configurações e variáveis de ambiente:** Utilização de **configMaps** para desacoplar configurações da aplicação do código, facilitando a gestão de variáveis de ambiente e a segurança de dados sensíveis.
 * **Provisão de infraestrutura confiável e escalável:** Demonstração da capacidade de construir uma base sólida para aplicações de missão crítica, com foco em alta disponibilidade e capacidade de resposta.
 
 ---
@@ -48,9 +48,9 @@ O cluster Kubernetes foi arquitetado para suportar o portal de notícias com os 
 Para executar este projeto localmente no Linux, você precisará ter as seguintes ferramentas instaladas e configuradas:
 
 * **Git:** Para clonar o repositório.
-    * Instalação: `sudo apt update && sudo apt install git -y`
+    * Instalação: `sudo apt update && sudo apt install git -y` (*Utilize o gerenciador de pacotes da sua distribuição linux*)
 * **Docker Engine:** Essencial para a construção e execução das imagens de contêiner.
-    * [Documentação oficial para Linux](https://docs.docker.com/engine/install/ubuntu/) (ajuste para sua distribuição)
+    * [Documentação oficial para Linux](https://docs.docker.com/engine/install/ubuntu/)
 * **Kubectl:** A ferramenta de linha de comando para interagir com clusters Kubernetes.
     * [Documentação oficial para Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 * **Minikube:** Para provisionar e gerenciar o cluster Kubernetes local.
@@ -68,7 +68,6 @@ Siga os passos abaixo para levantar seu cluster Kubernetes local com Minikube e 
 ### 1. Clonar o repositório
 
 Comece clonando este projeto para sua máquina:
-
 ```bash
 git clone git@github.com:mizaelZuza/portal-de-noticias.git
 cd portal-de-noticias
@@ -77,7 +76,6 @@ cd portal-de-noticias
 ### 2. Iniciar o cluster Minikube
 
 Inicie o Minikube com recursos adequados e um perfil nomeado:
-
 ```bash
 minikube start --driver=kvm2 --memory=4096mb --cpus=2 --profile portal-de-noticias
 ```
@@ -111,7 +109,8 @@ kubectl apply -f .
 Confirme que os componentes foram implantados e estão rodando:
 
 ```bash
-# A tag -o wide é opcional, formata a saida (resultado) com algumas informações extras, que são ocultas quando executado o comando sem a tag.
+# A tag -o wide é opcional, formata a saida (resultado) com algumas informações extras.
+# Informações que são ocultas quando executado o comando sem a tag.
 kubectl get pods -o wide
 kubectl get services -o wide
 kubectl get configmaps
@@ -121,13 +120,16 @@ kubectl get configmaps
 
 Obtenha a URL do seu serviço para acessá-lo no navegador:
 
-### No linux com o minikube o acesso é feito com o ip atribuido ao cluster
+*### No linux com o minikube o acesso é feito com o ip atribuido ao cluster*
+
 ```bash
 minikube profile list
 ```
+
 1.  Copie o IP atribuido ao cluster `portal-de-noticias`;
 2.  Cole o IP do cluster, seguido da porta configurada para o portal de noticias [`30000`] Ex: `http://ipdocluster:30000`;
 3.  Caso queira acessar o portal de cadastro das noticias, cole o IP seguido da porta configurada para acesso a essa parte da aplicação [`30001`] EX: `http://ipdocluster:30001`.
+
 *O usuário e senha padrão é user: admin e pass: admin*
 
 ### 7. Parar ou deletar o cluster
@@ -142,4 +144,5 @@ Ao finalizar, você pode pausar ou remover o cluster:
     ```bash
     minikube delete --profile portal-de-noticias
     ```
+
 ```
