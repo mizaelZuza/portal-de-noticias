@@ -144,5 +144,3 @@ Ao finalizar, você pode pausar ou remover o cluster:
     ```bash
     minikube delete --profile portal-de-noticias
     ```
-
-```
