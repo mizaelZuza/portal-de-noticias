@@ -8,6 +8,8 @@ Este projeto é uma demonstração prática do meu conhecimento em **DevOps** e 
 
 Meu objetivo é apresentar a capacidade de construir e manter uma infraestrutura de aplicação robusta e escalável, utilizando as melhores práticas do Kubernetes.
 
+A aplicação de exemplo, um portal de notícias, é composta por três componentes principais: um **frontend** para visualização das notícias, um **backend** para o gerenciamento (cadastro de títulos, descrições e imagens) e um **banco de dados** para a persistência das informações. Essa arquitetura de três camadas serve como base para demonstrar os conceitos de orquestração.
+
 ---
 
 ## 🎯 Objetivos de aprendizagem e demonstração
