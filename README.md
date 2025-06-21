@@ -41,6 +41,27 @@ O cluster Kubernetes foi arquitetado para suportar o portal de notícias com os 
 * **ConfigMaps:** Utilizados para **armazenar dados de configuração sensíveis** e variáveis de ambiente, que são injetados nos contêineres da aplicação em tempo de execução, promovendo a flexibilidade e a manutenção.
 * **Múltiplos contêineres:** A aplicação é construida em contêineres específicos (ex: frontend, backend, banco de dados), ilustrando a abordagem de microsserviços e a capacidade do Kubernetes de orquestrá-los de forma coesa.
 
+### 💾 Persistência de Dados
+
+Para garantir a persistência dos dados no componente `sistema-noticias`, foram implementados dois Persistent Volume Claims (PVCs). O StatefulSet `sistema-noticias-statefulset` utiliza dois PVCs para montar volumes nos contêineres:
+
+*   **imagens-pvc:** Este PVC é responsável por persistir os arquivos de imagem carregados no sistema de notícias.
+*   **sessao-pvc:** Este PVC é utilizado para armazenar dados de sessão do sistema de notícias.
+
+Ambos os PVCs utilizam a Storage Class `standard` (padrão do cluster, se não especificado outra) e possuem capacidade de 1Gi.
+
+**Observação:** Se a Storage Class `standard` não existir no seu cluster ou você desejar usar uma Storage Class diferente, será necessário criá-la antes de aplicar as configurações. Além disso, você pode ajustar o tamanho dos PVCs (`storage: 1Gi`) conforme a necessidade da sua aplicação.
+
+### 🌐 Serviços
+
+A comunicação entre os componentes da aplicação e o acesso externo são gerenciados pelos seguintes serviços:
+
+*   **svc-portal-noticias:** Responsável por expor o frontend do portal de notícias. Ele é configurado como um serviço do tipo `NodePort`, permitindo o acesso através do IP do cluster Minikube na porta `30000`. Este serviço direciona o tráfego para os pods do portal de notícias.
+
+*   **svc-sistema-noticias:** Expõe o backend (sistema de notícias) para acesso externo, principalmente para a interface administrativa. Sendo do tipo `NodePort`, ele é acessível através do IP do cluster na porta `30001`.
+
+*   **svc-db-noticias:** Este serviço, do tipo `ClusterIP`, é crucial para a comunicação interna com o banco de dados. Ele cria um ponto de acesso estável (um DNS interno) para os pods do banco de dados, permitindo que o backend (`sistema-noticias`) se conecte ao MySQL na porta `3306` de forma segura e resiliente, sem expor o banco de dados diretamente fora do cluster.
+
 ---
 
 ## 📋 Pré-requisitos
@@ -118,17 +139,15 @@ kubectl get configmaps
 
 ### 6. Acessar a aplicação
 
-Obtenha a URL do seu serviço para acessá-lo no navegador:
+Para acessar a aplicação, siga os passos:
 
-*### No linux com o minikube o acesso é feito com o ip atribuido ao cluster*
-
-```bash
-minikube profile list
-```
-
-1.  Copie o IP atribuido ao cluster `portal-de-noticias`;
-2.  Cole o IP do cluster, seguido da porta configurada para o portal de noticias [`30000`] Ex: `http://ipdocluster:30000`;
-3.  Caso queira acessar o portal de cadastro das noticias, cole o IP seguido da porta configurada para acesso a essa parte da aplicação [`30001`] EX: `http://ipdocluster:30001`.
+1.  **Obtenha o IP do cluster Minikube:**
+    ```bash
+    minikube ip -p portal-de-noticias
+    ```
+    Copie o IP retornado pelo comando.
+2.  **Acesse o portal de notícias:** No seu navegador, digite o IP do cluster seguido da porta `30000`.  Ex: `http://<ip_do_cluster>:30000`.
+3.  **Acesse o sistema de notícias (opcional):** Se desejar acessar a interface de administração (cadastro de notícias), utilize o mesmo IP do cluster e a porta `30001`. Ex: `http://<ip_do_cluster>:30001`.
 
 *O usuário e senha padrão é user: admin e pass: admin*
 
