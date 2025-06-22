@@ -130,7 +130,8 @@ minikube start --addons=metrics-server --driver=kvm2 --memory=4096mb --cpus=2 --
 ```
 *A quantidade de memória e cpus pode ser alterada conforme sua necessidade e recurso computacional disponível. Basta alterar as tags `--memory` e `--cpus`*
 
-### Importante: *Para que o recurso de Horizontal Pod Autoscaler (HPA) funcione corretamente, é necessário habilitar o metrics-server. A maneira recomendada é iniciar o cluster com a flag `--addons=metrics-server`, garantindo que o servidor de métricas esteja disponível desde o início. Embora existam outras formas de habilitá-lo, essa abordagem assegura que o HPA tenha acesso imediato às métricas necessárias para operar.*
+### Importante: 
+*Para que o recurso de Horizontal Pod Autoscaler (HPA) funcione corretamente, é necessário habilitar o metrics-server. A maneira recomendada é iniciar o cluster com a flag `--addons=metrics-server`, garantindo que o servidor de métricas esteja disponível desde o início. Embora existam outras formas de habilitá-lo, essa abordagem assegura que o HPA tenha acesso imediato às métricas necessárias para operar.*
 
 Confirme se o cluster está ativo:
 ```bash
